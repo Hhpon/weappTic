@@ -1,0 +1,10 @@
+@import "../common/scss/variable.scss";
+.signup {
+  padding: 0 20px;
+  .title-container {
+    font-size: $font-size-small;
+  }
+  .button-container{
+    margin-bottom: 10px;
+  }
+}
