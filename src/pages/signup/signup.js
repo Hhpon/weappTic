@@ -1,6 +1,10 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import { AtForm, AtInput, AtButton } from "taro-ui";
+import UserApi from "@api/user.js";
+import { ERR_OK, ERR_OR, ERR_NO } from "@common/js/config";
+import interfaceApi from "@api/interface.js";
+
 import "./signup.scss";
 
 export default class signup extends Component {
@@ -44,8 +48,44 @@ export default class signup extends Component {
     });
   }
   onSubmit(e) {
-    console.log(e);
-    console.log(this.state);
+    if (
+      !this.state.userName ||
+      !this.state.passWord ||
+      !this.state.conPassword ||
+      !this.state.name ||
+      !this.state.idCard
+    ) {
+      interfaceApi.showModelApi("提示", "请填写完整");
+      return;
+    }
+    if (this.state.passWord !== this.state.conPassword) {
+      interfaceApi.showModelApi("提示", "两次输入的密码不一样");
+      return;
+    }
+    let userInfo = {
+      userName: this.state.userName,
+      passWord: this.state.passWord,
+      name: this.state.name,
+      idCard: this.state.idCard
+    };
+    this._signup(userInfo);
+  }
+  _signup(userInfo) {
+    UserApi.signup(userInfo).then(res => {
+      console.log(res);
+      if (res.data.code === ERR_NO) {
+        interfaceApi.showModelApi("提示", "注册失败");
+        return;
+      } else if (res.data.code === ERR_OR) {
+        interfaceApi.showModelApi("提示", "用户名已经被注册");
+        return;
+      }
+      interfaceApi.showModelApi("成功", "注册成功").then(res => {
+        if (res.confirm) {
+          console.log("跳转到登录页面");
+        }
+      });
+    });
   }
   render() {
     return (

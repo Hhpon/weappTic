@@ -1,0 +1,15 @@
+@import '@common/scss/variable.scss';
+.index {
+  padding: 80px 20px;
+  font-size: $font-size-small;
+  .picker {
+    border: 2px solid $color-border;
+  }
+  .region{
+    font-size: 28px;
+    text-align: center;
+  }
+  .btn-container{
+    margin: 60px;
+  }
+}

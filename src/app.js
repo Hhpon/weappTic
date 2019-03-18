@@ -2,6 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import Index from './pages/index'
 
 import './app.scss'
+// import './custom-variables.scss'
 import 'taro-ui/dist/style/index.scss'
 
 // 如果需要在 h5 环境中开启 React Devtools
@@ -14,8 +15,10 @@ class App extends Component {
 
   config = {
     pages: [
-      'pages/signup/signup',
       'pages/index/index',
+      'pages/signup/signup',
+      'pages/signin/signin',
+      'pages/mine/mine',
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -23,6 +26,7 @@ class App extends Component {
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black'
     },
+    debug: true,
     tabBar: {
       color: '#333333',
       selectedColor: '#6190E8',
