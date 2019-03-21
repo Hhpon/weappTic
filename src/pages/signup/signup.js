@@ -82,7 +82,9 @@ export default class signup extends Component {
       }
       interfaceApi.showModelApi("成功", "注册成功").then(res => {
         if (res.confirm) {
-          console.log("跳转到登录页面");
+          console.log("跳转到index页面");
+          Taro.setStorage({ key: "userName", data: this.state.userName });
+          Taro.switchTab({ url: "/pages/index/index" });
         }
       });
     });

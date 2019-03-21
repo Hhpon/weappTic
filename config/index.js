@@ -46,7 +46,8 @@ const config = {
   },
   alias: {
     "@common": path.resolve(__dirname, "..", "src/common"),
-    "@api": path.resolve(__dirname, "..", "src/api")
+    "@api": path.resolve(__dirname, "..", "src/api"),
+    "@base": path.resolve(__dirname, "..", "src/base")
   },
   weapp: {
     module: {

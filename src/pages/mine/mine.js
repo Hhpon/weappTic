@@ -33,8 +33,8 @@ export default class mine extends Component {
       ]
     };
   }
-  componentWillMount() {
-    Taro.getStorage({ key: "key" })
+  componentDidShow() {
+    Taro.getStorage({ key: "userName" })
       .then(res => {
         console.log(res);
         this.setState({
@@ -43,7 +43,12 @@ export default class mine extends Component {
       })
       .catch(err => {
         console.log("跳转到登录页面");
+        Taro.navigateTo({url:'/pages/signin/signin'})
       });
+  }
+  setOut(){
+    Taro.clearStorageSync()
+    Taro.navigateTo({url:'/pages/signin/signin'})
   }
   render() {
     return (
@@ -60,7 +65,7 @@ export default class mine extends Component {
           <AtListItem title="产品意见" arrow="right" />
           <AtListItem title="邀请好友" arrow="right" />
         </View>
-        <AtButton type="secondary">按钮文案</AtButton>
+        <AtButton type="secondary" onClick={this.setOut}>退出登录</AtButton>
       </View>
     );
   }

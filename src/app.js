@@ -2,7 +2,6 @@ import Taro, { Component } from '@tarojs/taro'
 import Index from './pages/index'
 
 import './app.scss'
-// import './custom-variables.scss'
 import 'taro-ui/dist/style/index.scss'
 
 // 如果需要在 h5 环境中开启 React Devtools
@@ -15,6 +14,7 @@ class App extends Component {
 
   config = {
     pages: [
+      'pages/tic-detail/tic-detail',
       'pages/index/index',
       'pages/signup/signup',
       'pages/signin/signin',
@@ -33,22 +33,22 @@ class App extends Component {
       borderStyle: 'black',
       list: [
         {
-          pagePath: 'pages/index/index',
+          pagePath: 'pages/mine/mine',
           text: '订单',
-          iconPath: '',
-          selectedIconPath: ''
+          iconPath: './asset/tabber/order.png',
+          selectedIconPath: './asset/tabber/ordered.png'
         },
         {
           pagePath: 'pages/index/index',
           text: '首页',
-          iconPath: '',
-          selectedIconPath: ''
+          iconPath: './asset/tabber/index.png',
+          selectedIconPath: './asset/tabber/indexed.png'
         },
         {
-          pagePath: 'pages/index/index',
+          pagePath: 'pages/mine/mine',
           text: '我的',
-          iconPath: '',
-          selectedIconPath: ''
+          iconPath: './asset/tabber/mine.png',
+          selectedIconPath: './asset/tabber/mined.png'
         }
       ]
     }

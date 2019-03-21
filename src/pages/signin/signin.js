@@ -1,8 +1,8 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Text } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import { AtForm, AtInput, AtButton } from "taro-ui";
 import UserApi from "@api/user.js";
-import { ERR_OK, ERR_OR, ERR_NO } from "@common/js/config";
+import { ERR_OK } from "@common/js/config";
 import interfaceApi from "@api/interface.js";
 
 import "./signin.scss";
@@ -45,12 +45,18 @@ export default class signin extends Component {
       if (res.data.code === ERR_OK) {
         interfaceApi.showModelApi("成功", "登录成功").then(res => {
           if (res.confirm) {
-            console.log("跳转到登录页面");
+            console.log("跳转到index页面");
+            Taro.setStorage({ key: "userName", data: this.state.userName });
+            Taro.switchTab({ url: "/pages/index/index" });
           }
         });
+        return;
       }
       interfaceApi.showModelApi("提示", "账号或密码错误");
     });
+  }
+  signup() {
+    Taro.navigateTo({ url: "/pages/signup/signup" });
   }
   render() {
     return (
@@ -76,6 +82,13 @@ export default class signin extends Component {
             formType="submit"
           >
             登录
+          </AtButton>
+          <AtButton
+            className="button-container"
+            type="primary"
+            onClick={this.signup}
+          >
+            注册
           </AtButton>
         </AtForm>
       </View>

@@ -3,6 +3,7 @@ import { View, Text, Picker } from "@tarojs/components";
 import { AtButton, AtInput } from "taro-ui";
 import interfaceApi from "@api/interface.js";
 import UserApi from "@api/user.js";
+import checkUser from "@common/js/check-user.js";
 
 import "./index.scss";
 
@@ -13,21 +14,27 @@ export default class Index extends Component {
   constructor() {
     super();
     this.state = {
-      dateSel: "2019-03-18",
+      dateSel: "2019-03-31",
       outCity: "",
       overCity: ""
     };
   }
-  componentWillMount() {
-    let date = new Date();
-    console.log(date);
-  }
+  componentWillMount() {}
 
   componentDidMount() {}
 
   componentWillUnmount() {}
 
-  componentDidShow() {}
+  componentDidShow() {
+    checkUser()
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log("跳转到登录页面");
+        Taro.navigateTo({ url: "/pages/signin/signin" });
+      });
+  }
 
   componentDidHide() {}
 
@@ -67,6 +74,18 @@ export default class Index extends Component {
   _inquireTic(inquireInfo) {
     UserApi.inquireTic(inquireInfo).then(res => {
       console.log(res);
+      if (res.data.code === 202) {
+        interfaceApi.showModelApi("提示", "查询失败");
+      } else if (res.data.code === 201) {
+        interfaceApi.showModelApi("提示", "当天没有匹配车次");
+      } else {
+        console.log("跳转到车票详情页面");
+        Taro.navigateTo({
+          url: `/pages/tic-detail/tic-detail?dateSel=${
+            this.state.dateSel
+          }&&outCity=${this.state.outCity}&&overCity=${this.state.overCity}`
+        });
+      }
     });
   }
   render() {
@@ -76,7 +95,6 @@ export default class Index extends Component {
           <AtInput
             editable={false}
             type="text"
-            placeholder="2018-03-18"
             value={this.state.dateSel}
             className="region"
           />
@@ -84,9 +102,9 @@ export default class Index extends Component {
         <Picker mode="region" onChange={this.onoutCityChange}>
           <AtInput
             editable={false}
-            title="您的抵达地"
+            title="您的出发地"
             type="text"
-            placeholder="您要去哪？"
+            placeholder="您从哪里出发？"
             value={this.state.outCity}
             className="region"
           />
