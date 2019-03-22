@@ -3,7 +3,7 @@ import { View, Text, Picker } from "@tarojs/components";
 import { AtButton, AtInput } from "taro-ui";
 import interfaceApi from "@api/interface.js";
 import UserApi from "@api/user.js";
-import checkUser from "@common/js/check-user.js";
+import checkUser from "@common/js/get-user.js";
 
 import "./index.scss";
 
@@ -63,7 +63,6 @@ export default class Index extends Component {
       interfaceApi.showModelApi("提示", "请输入完整地址");
       return;
     }
-    console.log(this.state);
     let inquireInfo = {
       dateSel: this.state.dateSel,
       outCity: this.state.outCity,

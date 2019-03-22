@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 
-function checkUser() {
+function getUser() {
   return Taro.getStorage({ key: "userName" });
 }
 
-export default checkUser;
+export default getUser;

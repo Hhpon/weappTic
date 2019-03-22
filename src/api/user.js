@@ -26,8 +26,35 @@ function inquireTic(inquireInfo) {
   });
 }
 
+function saleTic(saleInfo){
+  return Taro.request({
+    method: "POST",
+    url: `${HOST}/sale`,
+    data: { saleInfo: saleInfo }
+  });
+}
+
+function getOrder(userName){
+  return Taro.request({
+    method: "POST",
+    url: `${HOST}/order`,
+    data: { userName: userName }
+  });
+}
+
+function refundTic(_id){
+  return Taro.request({
+    method: "POST",
+    url: `${HOST}/refund`,
+    data: { _id: _id }
+  });
+}
+
 export default {
   signup,
   signin,
-  inquireTic
+  inquireTic,
+  saleTic,
+  getOrder,
+  refundTic
 };
