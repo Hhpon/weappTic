@@ -30,6 +30,7 @@ export default class order extends Component {
   }
   _getOrder(userName) {
     UserApi.getOrder(userName).then(res => {
+      console.log(res.data);
       this.setState({
         orderInfo: res.data.orderInfo
       });
@@ -52,8 +53,11 @@ export default class order extends Component {
     UserApi.refundTic(e._id).then(res => {
       console.log(res);
       if (res.data.code === ERR_OK) {
-        interfaceApi.showModelApi("成功", "退票成功！");
-        this._getOrder(this.state.userName);
+        interfaceApi.showModelApi("成功", "退票成功！").then(res => {
+          if (res.confirm) {
+            this._getOrder(this.state.userName);
+          }
+        });
       }
     });
   }
