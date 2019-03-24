@@ -4,6 +4,7 @@ import { AtButton, AtInput } from "taro-ui";
 import interfaceApi from "@api/interface.js";
 import UserApi from "@api/user.js";
 import checkUser from "@common/js/get-user.js";
+import getTime from "@common/js/get-time.js";
 
 import "./index.scss";
 
@@ -14,7 +15,7 @@ export default class Index extends Component {
   constructor() {
     super();
     this.state = {
-      dateSel: "2019-03-31",
+      dateSel: "",
       outCity: "",
       overCity: ""
     };
@@ -26,6 +27,10 @@ export default class Index extends Component {
   componentWillUnmount() {}
 
   componentDidShow() {
+    let date = getTime();
+    this.setState({
+      dateSel: date
+    });
     checkUser()
       .then(res => {
         console.log(res);
@@ -58,7 +63,7 @@ export default class Index extends Component {
     });
   };
   onInquire(e) {
-    console.log(this.state.outCity);
+    console.log(this.state.dateSel);
     if (!this.state.overCity || !this.state.outCity) {
       interfaceApi.showModelApi("提示", "请输入完整地址");
       return;
@@ -68,6 +73,7 @@ export default class Index extends Component {
       outCity: this.state.outCity,
       overCity: this.state.overCity
     };
+    console.log(inquireInfo);
     this._inquireTic(inquireInfo);
   }
   _inquireTic(inquireInfo) {
@@ -90,11 +96,15 @@ export default class Index extends Component {
   render() {
     return (
       <View className="index">
-        <Picker mode="date" onChange={this.onDateChange}>
+        <Picker
+          mode="date"
+          onChange={this.onDateChange}
+          start={this.state.dateSel}
+        >
           <AtInput
             editable={false}
-            type="text"
             value={this.state.dateSel}
+            type="text"
             className="region"
           />
         </Picker>

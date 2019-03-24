@@ -50,6 +50,10 @@ export default class order extends Component {
   }
   refundHandle(e) {
     console.log(e);
+    if (!this.checkTime(e.outTime)) {
+      interfaceApi.showModelApi("提示", "该票已过期，不可退");
+      return;
+    }
     UserApi.refundTic(e._id).then(res => {
       console.log(res);
       if (res.data.code === ERR_OK) {
